@@ -95,27 +95,27 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 +(instancetype)reachabilityWithHostname:(NSString*)hostname
 {
-    SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithName(NULL, [hostname UTF8String]);
-    if (ref) 
-    {
-        id reachability = [[self alloc] initWithReachabilityRef:ref];
-
-        return reachability;
-    }
-    
-    return nil;
+	SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithName(NULL, [hostname UTF8String]);
+	if (ref)
+	{
+		id reachability = [[self alloc] initWithReachabilityRef:ref];
+		CFRelease(ref);
+		return reachability;
+	}
+	
+	return nil;
 }
 
 +(instancetype)reachabilityWithAddress:(void *)hostAddress
 {
-    SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr*)hostAddress);
-    if (ref) 
-    {
-        id reachability = [[self alloc] initWithReachabilityRef:ref];
-        
+	SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr*)hostAddress);
+	if (ref)
+	{
+		id reachability = [[self alloc] initWithReachabilityRef:ref];
+		CFRelease(ref);
         return reachability;
     }
-    
+	
     return nil;
 }
 
